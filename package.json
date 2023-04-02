@@ -1,0 +1,24 @@
+{
+  "name": "nosdav-todo",
+  "version": "0.0.1",
+  "description": "todo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nosdav/todo.git"
+  },
+  "author": "Melvin Carvalho",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nosdav/todo/issues"
+  },
+  "homepage": "https://github.com/nosdav/todo#readme",
+  "keywords": [
+    "nostr",
+    "nosdav",
+    "app"
+  ]
+}

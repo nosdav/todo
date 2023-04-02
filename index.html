@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List</title>
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(45deg, #83a4d4, #b6fbff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      .container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        max-width: 500px;
+        width: 90%;
+      }
+
+      h1 {
+        text-align: center;
+        margin: 10px 0;
+        font-size: 36px;
+        color: #333;
+      }
+
+      input {
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        outline: none;
+        border-radius: 5px;
+        transition: all 0.3s;
+      }
+
+      input:focus {
+        border-color: #83a4d4;
+        box-shadow: 0 0 10px rgba(131, 164, 212, 0.5);
+      }
+
+      ul {
+        list-style-type: none;
+        margin: 20px 0;
+        padding: 0;
+      }
+
+      li {
+        background-color: #eee;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s;
+      }
+
+      li:hover {
+        background-color: #83a4d4;
+        color: #fff;
+      }
+
+      button {
+        font-size: 18px;
+        color: #444;
+        background: transparent;
+        cursor: pointer;
+        border: none;
+        transition: all 0.3s;
+      }
+
+      button:hover {
+        color: #f00;
+      }
+
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>To-Do List</h1>
+      <input type="text" id="taskInput" placeholder="Enter a new task" />
+      <ul id="taskList"></ul>
+    </div>
+    <script>
+      const taskInput = document.getElementById('taskInput')
+      const taskList = document.getElementById('taskList')
+
+      taskInput.addEventListener('keydown', event => {
+        if (event.key === 'Enter' && taskInput.value.trim() !== '') {
+          createTask(taskInput.value.trim())
+          taskInput.value = ''
+        }
+      })
+
+      function createTask(taskName) {
+        const li = document.createElement('li')
+        li.textContent = taskName
+
+        const removeBtn = document.createElement('button')
+        removeBtn.textContent = '🗑️'
+        removeBtn.addEventListener('click', () => {
+          taskList.removeChild(li)
+        })
+
+        li.appendChild(removeBtn)
+        taskList.appendChild(li)
+      }
+    </script>
+  </body>
+</html>
