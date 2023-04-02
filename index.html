@@ -86,34 +86,79 @@
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>To-Do List</h1>
-      <input type="text" id="taskInput" placeholder="Enter a new task" />
-      <ul id="taskList"></ul>
-    </div>
-    <script>
-      const taskInput = document.getElementById('taskInput')
-      const taskList = document.getElementById('taskList')
+    <div id="app"></div>
+    <script type="module">
+      import { html, render, Component } from './js/spux.js'
 
-      taskInput.addEventListener('keydown', event => {
-        if (event.key === 'Enter' && taskInput.value.trim() !== '') {
-          createTask(taskInput.value.trim())
-          taskInput.value = ''
+      class TodoApp extends Component {
+        constructor() {
+          super()
+          this.state = {
+            tasks: [],
+            taskInput: ''
+          }
         }
-      })
 
-      function createTask(taskName) {
-        const li = document.createElement('li')
-        li.textContent = taskName
+        handleInputChange = e => {
+          this.setState({ taskInput: e.target.value })
+        }
 
-        const removeBtn = document.createElement('button')
-        removeBtn.textContent = '🗑️'
-        removeBtn.addEventListener('click', () => {
-          taskList.removeChild(li)
-        })
+        handleKeyDown = e => {
+          if (e.key === 'Enter') {
+            const taskInput = e.target.value.trim()
+            if (taskInput !== '') {
+              this.createTask(taskInput)
+              this.setState({ taskInput: '' })
+            }
+          }
+        }
 
-        li.appendChild(removeBtn)
-        taskList.appendChild(li)
+        createTask = taskName => {
+          const tasks = [...this.state.tasks, taskName]
+          this.setState({ tasks })
+        }
+
+        deleteTask = index => {
+          const tasks = [...this.state.tasks]
+          tasks.splice(index, 1)
+          this.setState({ tasks })
+        }
+
+        render(_, { tasks, taskInput }) {
+          return html`
+            <div class="container">
+              <h1>To-Do List</h1>
+              <input
+                type="text"
+                id="taskInput"
+                placeholder="Enter a new task"
+                value=${taskInput}
+                onChange=${this.handleInputChange}
+                onKeyDown=${this.handleKeyDown}
+              />
+              <ul id="taskList">
+                ${tasks.map(
+                  (task, index) => html`
+                    <li>
+                      ${task}
+                      <button onClick=${() => this.deleteTask(index)}>
+                        🗑️
+                      </button>
+                    </li>
+                  `
+                )}
+              </ul>
+            </div>
+          `
+        }
+      }
+
+      render(html`<${TodoApp} />`, document.getElementById('app'))
+
+      function htmPreact(preact) {
+        const { h } = preact
+        const htm = htm.bind(h)
+        return { html: htm, render: preact.render, Component: preact.Component }
       }
     </script>
   </body>
