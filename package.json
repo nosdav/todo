@@ -1,6 +1,6 @@
 {
   "name": "nosdav-todo",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "todo",
   "main": "index.js",
   "scripts": {
