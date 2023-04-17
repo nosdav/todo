@@ -23,7 +23,19 @@
 
 ## Introduction
 
-nosdav-todo
+nosdav-todo is a simple todo list that can be saved to NosDAV
+
+## Docker
+
+To build and run the container, navigate to the directory containing this Dockerfile and your static files, then run the following commands:
+
+```bash
+docker build -t nosdav-todo .
+docker run -d -p 8080:80 nosdav-todo
+```
+
+Replace nosdav-todo with a descriptive name for your container image. After executing these commands, your container will be up and running, and you can access the served files via http://localhost:8080 in your web browser.
+
 
 ## License
 
