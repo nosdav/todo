@@ -88,7 +88,7 @@ export class App extends Component {
 
         ${userPublicKey
         ? html`
-              <button onClick="${this.addTask}" type="button">
+              <button onClick="${this.addTask}" type="button" style="background-color: #4CAF50; color: white; border: none; border-radius: 5px; padding: 5px 10px;">
                 Add Task
               </button>
             `
@@ -97,18 +97,21 @@ export class App extends Component {
             </button>`}
 
         <ul id="taskList">
-          ${tasks.map(
+          ${tasks
+        .slice(0)
+        .reverse()
+        .map(
           (task, index) => html`
-              <li>
-                ${task}
-                <button onClick=${() => this.deleteTask(index)}>
+                <li>
+                  ${task}
+                  <button onClick=${() => this.deleteTask(tasks.length - 1 - index)}>
                   🗑️
                 </button>
               </li>
             `
         )}
-        </ul>
-      </div>
-      `;
+      </ul>
+    </div>
+    `;
   }
 }
