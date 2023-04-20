@@ -55,13 +55,31 @@ export class App extends Component {
   addTask = () => {
     const { taskInput, tasks } = this.state;
     if (taskInput) {
-      const updatedTasks = [...tasks, taskInput];
+      const newTask = {
+        '@id': Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
+        created_at: Math.floor(Date.now() / 1000),
+        content: taskInput,
+      };
+      const updatedTasks = [...tasks, newTask];
       this.setState({ tasks: updatedTasks, taskInput: '' }, this.saveTasks);
     }
   };
 
-  deleteTask = (taskIndex) => {
-    const updatedTasks = this.state.tasks.filter((_, index) => index !== taskIndex);
+  formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp * 1000);
+    const dateTimeFormat = new Intl.DateTimeFormat('en', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    return dateTimeFormat.format(date);
+  };
+
+
+  deleteTask = (taskId) => {
+    const updatedTasks = this.state.tasks.filter((task) => task['@id'] !== taskId);
     this.setState({ tasks: updatedTasks }, this.saveTasks);
   };
 
@@ -89,7 +107,7 @@ export class App extends Component {
         />
         <br/>
         <br/>
-
+  
         ${userPublicKey
         ? html`
               <button onClick="${this.addTask}" type="button" style="background-color: #4CAF50; color: white; border: none; border-radius: 5px; padding: 5px 10px;">
@@ -99,16 +117,19 @@ export class App extends Component {
         : html` <button style="background-color: #4CAF50; color: white; border: none; border-radius: 5px; padding: 5px 10px;" id="login" onClick="${this.userLogin}">
               Login
             </button>`}
-
+  
         <ul id="taskList">
           ${tasks
         .slice(0)
         .reverse()
         .map(
-          (task, index) => html`
+          (task) => html`
                 <li>
-                  ${task}
-                  <button onClick=${() => this.deleteTask(tasks.length - 1 - index)}>
+                  ${task.content}
+                  <span class="timestamp">
+                    ${this.formatTimestamp(task.created_at)}
+                  </span>
+                  <button onClick=${() => this.deleteTask(task['@id'])}>
                   🗑️
                 </button>
               </li>
