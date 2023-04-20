@@ -29,7 +29,9 @@
         text-align: right;
         vertical-align: bottom;
         line-height: normal;
-        float: right;
+        position: absolute;
+        right: 10px;
+        bottom: 0;
       }
 
       .container {
@@ -70,7 +72,21 @@
         padding: 0;
       }
 
+      .delete-btn {
+        font-size: 18px;
+        color: #444;
+        background: transparent;
+        cursor: pointer;
+        border: none;
+        transition: all 0.3s;
+        position: absolute;
+        right: 10px;
+        top: calc(50% - 4px); /* Add space below the delete button */
+        transform: translateY(-50%);
+      }
+
       li {
+        position: relative;
         background-color: #eee;
         padding: 15px;
         margin-bottom: 10px;

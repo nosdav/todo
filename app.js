@@ -77,6 +77,33 @@ export class App extends Component {
     return dateTimeFormat.format(date);
   };
 
+  timeAgo(timestamp) {
+    const now = new Date().getTime() / 1000;
+    const secondsPast = Math.floor(now - timestamp);
+    if (secondsPast < 60) {
+      return `${secondsPast} seconds ago`;
+    }
+    const minutesPast = Math.floor(secondsPast / 60);
+    if (minutesPast < 60) {
+      return `${minutesPast} minutes ago`;
+    }
+    const hoursPast = Math.floor(minutesPast / 60);
+    if (hoursPast < 24) {
+      return `${hoursPast} hours ago`;
+    }
+    const daysPast = Math.floor(hoursPast / 24);
+    if (daysPast < 30) {
+      return `${daysPast} days ago`;
+    }
+    const monthsPast = Math.floor(daysPast / 30);
+    if (monthsPast < 12) {
+      return `${monthsPast} months ago`;
+    }
+    const yearsPast = Math.floor(monthsPast / 12);
+    return `${yearsPast} years ago`;
+  }
+
+
 
   deleteTask = (taskId) => {
     const updatedTasks = this.state.tasks.filter((task) => task['@id'] !== taskId);
@@ -90,7 +117,6 @@ export class App extends Component {
       this.addTask();
     }
   };
-
   render() {
     const { userPublicKey, taskInput, tasks } = this.state;
 
@@ -125,18 +151,21 @@ export class App extends Component {
         .map(
           (task) => html`
                 <li>
-                  ${task.content}
+                  <div style="display: flex; align-items: center;">
+                    ${task.content}
+                  </div>
                   <span class="timestamp">
-                    ${this.formatTimestamp(task.created_at)}
-                  </span>
-                  <button onClick=${() => this.deleteTask(task['@id'])}>
-                  🗑️
-                </button>
-              </li>
-            `
+                  ${this.timeAgo(task.created_at)}
+                </span>
+                  <button class="delete-btn" onClick=${() => this.deleteTask(task['@id'])}>
+                    🗑️
+                  </button>
+                </li>
+              `
         )}
       </ul>
     </div>
     `;
   }
+
 }
