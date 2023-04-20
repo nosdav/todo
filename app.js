@@ -85,6 +85,8 @@ export class App extends Component {
           onChange=${this.handleInputChange}
           onKeyDown=${this.handleKeyDown}
         />
+        <br/>
+        <br/>
 
         ${userPublicKey
         ? html`
@@ -92,7 +94,7 @@ export class App extends Component {
                 Add Task
               </button>
             `
-        : html` <button id="login" onClick="${this.userLogin}">
+        : html` <button style="background-color: #4CAF50; color: white; border: none; border-radius: 5px; padding: 5px 10px;" id="login" onClick="${this.userLogin}">
               Login
             </button>`}
 
