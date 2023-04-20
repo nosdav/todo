@@ -19,7 +19,7 @@ export class App extends Component {
   }
 
   async componentDidMount() {
-    await this.userLogin();
+    // await this.userLogin();
   }
 
   handleInputChange = (event) => {
