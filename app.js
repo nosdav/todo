@@ -65,8 +65,10 @@ export class App extends Component {
     this.setState({ tasks: updatedTasks }, this.saveTasks);
   };
 
-  handleKeyDown = (event) => {
+  handleKeyUp = (event) => {
+    console.log(event.key)
     if (event.key === 'Enter') {
+      console.log('enter pressed')
       this.addTask();
     }
   };
@@ -83,7 +85,7 @@ export class App extends Component {
           placeholder="Enter a new task"
           value=${taskInput}
           onChange=${this.handleInputChange}
-          onKeyDown=${this.handleKeyDown}
+          onKeyUp=${this.handleKeyUp}
         />
         <br/>
         <br/>
