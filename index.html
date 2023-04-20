@@ -3,7 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>To-Do List</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>NosDAV Todo</title>
+    <script type="application/ld+json" id="data">
+      {
+        "@context": "https://schema.org"
+      }
+    </script>
     <style>
       body {
         font-family: 'Roboto', sans-serif;
@@ -84,82 +90,13 @@
 
       @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
     </style>
-  </head>
-  <body>
-    <div id="app"></div>
+
     <script type="module">
-      import { html, render, Component } from './js/spux.js'
+      import { html, render } from './js/spux.js'
+      import { App } from './app.js'
 
-      class TodoApp extends Component {
-        constructor() {
-          super()
-          this.state = {
-            tasks: [],
-            taskInput: ''
-          }
-        }
-
-        handleInputChange = e => {
-          this.setState({ taskInput: e.target.value })
-        }
-
-        handleKeyDown = e => {
-          if (e.key === 'Enter') {
-            const taskInput = e.target.value.trim()
-            if (taskInput !== '') {
-              this.createTask(taskInput)
-              this.setState({ taskInput: '' })
-            }
-          }
-        }
-
-        createTask = taskName => {
-          const tasks = [...this.state.tasks, taskName]
-          this.setState({ tasks })
-        }
-
-        deleteTask = index => {
-          const tasks = [...this.state.tasks]
-          tasks.splice(index, 1)
-          this.setState({ tasks })
-        }
-
-        render(_, { tasks, taskInput }) {
-          return html`
-            <div class="container">
-              <h1>To-Do List</h1>
-              <input
-                type="text"
-                id="taskInput"
-                placeholder="Enter a new task"
-                value=${taskInput}
-                onChange=${this.handleInputChange}
-                onKeyDown=${this.handleKeyDown}
-              />
-              <ul id="taskList">
-                ${tasks.map(
-                  (task, index) => html`
-                    <li>
-                      ${task}
-                      <button onClick=${() => this.deleteTask(index)}>
-                        🗑️
-                      </button>
-                    </li>
-                  `
-                )}
-              </ul>
-            </div>
-          `
-        }
-      }
-
-      render(html`<${TodoApp} />`, document.getElementById('app'))
-
-      function htmPreact(preact) {
-        const { h } = preact
-        const htm = htm.bind(h)
-        return { html: htm, render: preact.render, Component: preact.Component }
-      }
+      render(html` <${App} /> `, document.body)
     </script>
-  </body>
+  </head>
+  <body></body>
 </html>
