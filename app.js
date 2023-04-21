@@ -1,12 +1,15 @@
 import { html, Component } from './js/spux.js';
 import { getPath, getQueryStringValue, loadFile, saveFile } from './util.js';
+import './js/dior.js'
 
 export class App extends Component {
   constructor() {
     super();
-    const serverUrl = getQueryStringValue('storage') || 'https://nosdav.nostr.rocks';
-    const mode = getQueryStringValue('mode') || 'm';
-    const uri = getQueryStringValue('uri') || 'tasks.json';
+
+    const serverUrl = getQueryStringValue('storage') || di.data.storage || 'https://nosdav.nostr.rocks'
+    const mode = getQueryStringValue('mode') || di.data.m || 'm'
+    const uri = getQueryStringValue('uri') || di.data.uri || 'tasks.json'
+
     this.state = {
       userPublicKey: null,
       filename: uri,
