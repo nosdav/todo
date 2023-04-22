@@ -1,4 +1,4 @@
-import { html, Component } from './js/spux.js';
+import { html, Component, render } from './js/spux.js';
 import { getPath, getQueryStringValue, loadFile, saveFile } from './util.js';
 import './js/dior.js'
 
@@ -172,3 +172,5 @@ export class App extends Component {
   }
 
 }
+
+render(html` <${App} /> `, document.body)
